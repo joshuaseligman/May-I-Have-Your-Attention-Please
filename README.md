@@ -1,0 +1,30 @@
+# May-I-Have-Your-Attention-Please
+
+The “May I Have Your Attention, Please?” application was the project that earned my teammates and I 3<sup>rd</sup> place at the Marist-IBM Datathon in April 2021. With the recent COVID-19 pandemic and worldwide shift to completely online environments, the theme of the event was effective communication in a digital world.
+
+My team wanted to work on a project that dealt with how people communicate with each other on digital platforms with the ultimate goal of building an application that would promote positive communication skills and habits. After initially struggling to find a dataset that would give us direction for our project, we stumbled upon a study done at Stanford University regarding attention spans in a virtual environment. We began by analyzing and graphing the data that were published in the study. Although there were many networks in the dataset, we chose to only use one of them (Network 21) because it had 8 users, which was the upper bound for users in the networks, and we thought that it would give us more data and examples to analyze the attention spans. In this stage of the project, I helped with some of the data analysis and manipulation of the dataset (see the Jupyter notebook). However, most of my responsibilities were in the other parts of the project, and I was not involved in the graphing of the data or any of the R code.
+
+Once we saw the heavily skewed trends in the data, we were confident in the data and moved on to building an application that reflected our findings. One common observation that each of us had noticed with the transition to online learning is that we are constantly distracted by our phones when not in the classroom and, therefore, are oftentimes not paying attention to the professor’s lecture. This awareness of our situations inspired us to build an application that would reinforce the importance of eye contact and help people improve their attention spans when online.
+
+Aside from the data analysis, the final project consisted of two main components: the object detection model and the application itself.
+
+First, the object detection model had to be built to track the eyes of the user. We began by taking over 1,000 pictures of ourselves, one half with eyes open and the other half without eyes in the picture. I worked very closely with one of my teammates to write the Python scripts for collecting these images as well as the actual image capture process. Once the pictures were taken and organized by positive (with eyes) and negative (without eyes), we were ready to train an object detection model. We ended up choosing to use the Cascade classifier model in OpenCV for the following reasons: we were already using the module for the collection of the images, the model’s easy training process, and the model’s high accuracy. OpenCV 3 has command-line functions that make it very easy to provide the appropriate data to train the Cascade classifier. The training process was broken up into 3 of these functions. The first of which was creating the positive samples. Although we had already taken the pictures and separated the positives from the negatives, we had not done anything to identify the eyes in the pictures. This first command-line function opened each of the photos in the positive folder and let us draw rectangles around the eyes in each of the pictures. The data of these rectangles were then automatically stored in the `pos.txt` file. Next, we then ran the command for the computer to read the `pos.txt` file and convert it into machine code, which was saved in the `pos.vec` file. The final step was training and saving the model with the last command-line function. The model reached an accuracy of about 95% on the training data.
+
+Building the actual application was my primary responsibility on the second day of the Datathon and the code for the application is entirely my own. Although I had never worked with Kivy to build Python GUI applications before, I decided to work with the module because I needed a framework that was relatively easy to learn and allowed me to work in Python as I had to continue using OpenCV in the actual application for the live eye detection. As it was my first time working with Kivy, it was a struggle throughout the event to put together the application with all the necessary features in a nice format. To overcome this obstacle, I started small with individual components and continued to increase the scale and complexity of the code. This enabled me to learn Kivy as I was going along without the need to go crazy with tutorials and online articles, especially in the time crunch that I had to build the application.
+
+Overall, the Marist-IBM Datathon was an event I will never forget. Although I may have lost a ton of sleep during the event, I still learned a ton and got to be creative within the field of data science and machine learning. Most importantly, I had a blast participating in the Datathon and would do it all over again without hesitation. 
+
+To run the final build of “May I Have Your Attention, Please?” you will want to run the `AttentionApp.py` file located in the `app` folder in the repository. Make sure you have OpenCV, Kivy, and Matplotlib downloaded and installed before running.
+
+Installation instructions for these modules can be found at the following websites:<br>
+https://opencv.org<br>
+https://kivy.org/#home<br>
+https://matplotlib.org
+
+If you would like to run the data analysis file, you can open the `DataAnalysis.rmd` file in the `data-analytics` folder in the repository. First, make sure to download R and RStudio, and then you can open the file in RStudio. Upon opening RStudio, navigate to the `Packages` tab and install the following packages: ggplot2, tidyverse, RColorBrewer, and ggpubr.
+
+Information to download R and RStudio can be found in the links below:<br>
+https://www.r-project.org<br>
+https://www.rstudio.com
+
+Also, to read about the dataset we used for the data analysis portion of the project, please click on this link: http://snap.stanford.edu/data/comm-f2f-Resistance.html
