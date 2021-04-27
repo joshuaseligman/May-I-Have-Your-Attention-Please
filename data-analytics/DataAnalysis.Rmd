@@ -1,0 +1,83 @@
+---
+title: "Datathon Data Analysis"
+output: html_notebook
+---
+
+```{r}
+library(ggplot2)
+library(tidyverse)
+library(RColorBrewer)
+library(ggpubr)
+```
+
+
+```{r}
+LookingAtLaptop <- read.csv('data/network/network21.csv')
+```
+
+```{r}
+LookingAtLaptop
+```
+
+```{r}
+LAPTOP <- LookingAtLaptop %>% mutate(P_TO_LAPTOP = P1_TO_LAPTOP + P2_TO_LAPTOP + P3_TO_LAPTOP + P4_TO_LAPTOP + P5_TO_LAPTOP + P6_TO_LAPTOP + P7_TO_LAPTOP + P8_TO_LAPTOP) %>% select(-(P1_TO_LAPTOP: P8_TO_P8)) %>% mutate(TIME_SECONDS = TIME / 3)
+LAPTOP
+```
+
+```{r}
+ggplot(LAPTOP, aes(x = P_TO_LAPTOP)) + geom_bar(fill = "slategray1", color = "magenta") + xlab("Number of People Looking at Laptop") + scale_x_continuous(breaks = 0:5, labels = c("0", "1", "2", "3", "4", "5")) + ggtitle("Count of People (Out of 8 Participants)\n Looking at Their Laptop") + geom_text(aes(label = ..count..), stat = "count", vjust = -0.2, color = "black")
+```
+
+```{r}
+average_data <- read.csv('data/average_data.csv')
+```
+
+```{r}
+average_data
+```
+
+```{r}
+myColors <- brewer.pal(9, "Set3")
+average_on <- ggplot(average_data, aes(x = X, y = Average.Good)) + geom_col(fill = myColors, color = "black") + theme(axis.text.x = element_text(angle = 60, hjust = 1)) + xlab("Each Participant") + scale_x_discrete(labels = c("P1_TO_LAPTOP" = "Participant 1", "P2_TO_LAPTOP" = "Participant 2", "P3_TO_LAPTOP" = "Participant 3", "P4_TO_LAPTOP" = "Participant 4", "P5_TO_LAPTOP" = "Participant 5", "P6_TO_LAPTOP" = "Participant 6", "P7_TO_LAPTOP" = "Participant 7","P8_TO_LAPTOP" = "Participant 8")) + ylab("Average Attention on Laptop Screen\n (in seconds)"
+) + ggtitle(" Average Attention Span on Laptop Screen (in seconds) \n for Each of the Eight Participants") + ylim(0, 40) + geom_text(aes(label = round(Average.Good, 4)), vjust = -0.2, color = "black")
+average_on
+```
+
+```{r}
+myColors <- brewer.pal(9, "Set3")
+average_away <- ggplot(average_data, aes(x = X, y = Average.Bad)) + geom_col(fill = myColors, color = "black") + theme(axis.text.x = element_text(angle = 60, hjust = 1)) + xlab("Each Participant") + scale_x_discrete(labels = c("Overall" = "Overall", "P1_TO_LAPTOP" = "Participant 1", "P2_TO_LAPTOP" = "Participant 2", "P3_TO_LAPTOP" = "Participant 3", "P4_TO_LAPTOP" = "Participant 4", "P5_TO_LAPTOP" =
+"Participant 5", "P6_TO_LAPTOP" = "Participant 6", "P7_TO_LAPTOP" = "Participant 7", "P8_TO_LAPTOP" = "Participant 8")) + ylab("Average Attention Away from Laptop Screen\n (in seconds)") + ggtitle(" Average Attention Span Away from Laptop Screen \n (in seconds) for Each of the Eight Participants") + geom_text(aes(label = round(Average.Bad, 4)), vjust = -0.2, color = "black")
+average_away
+```
+
+```{r fig.height=5, fig.width=5}
+figure <- ggarrange(average_on, average_away + font("x.text", size = 10), ncol = 1, nrow = 2, common.legend = TRUE)
+figure
+```
+
+```{r}
+average_data
+```
+
+```{r}
+av_data <- average_data[-seq(nrow(average_data), nrow(average_data)), ]
+av_data
+```
+
+```{r}
+myColors2 <- brewer.pal(8, "Set3")
+max_on <- ggplot(av_data, aes(x = X, y = Max.Good)) + geom_col(fill = myColors2, color = "black") + theme(axis.text.x = element_text(angle = 60, hjust = 1)) + xlab("Each Participant") + scale_x_discrete(labels = c("P1_TO_LAPTOP" = "Participant 1", "P2_TO_LAPTOP" = "Participant 2", "P3_TO_LAPTOP" = "Participant 3", "P4_TO_LAPTOP" = "Participant 4", "P5_TO_LAPTOP" = "Participant 5", "P6_TO_LAPTOP" = "Participant 6", "P7_TO_LAPTOP" = "Participant 7", "P8_TO_LAPTOP" = "Participant 8")) + ylab(
+"Maximum Consecutive Number of Seconds \n Looking at Laptop") + ggtitle("Maximum Consecutive Amount of Time Each Participant \n Looks at the Laptop Screen") + ylim(0, 475) + geom_text(aes(label = round(Max.Good, 4)), vjust = -0.2, color = "black")
+max_on
+```
+
+```{r}
+max_away <- ggplot(av_data, aes(x = X, y = Max.Bad)) + geom_col(fill = myColors2, color = "black") + theme(axis.text.x = element_text(angle = 60, hjust = 1)) + xlab("Each Participant") + scale_x_discrete(labels = c("P1_TO_LAPTOP" = "Participant 1", "P2_TO_LAPTOP" = "Participant 2", "P3_TO_LAPTOP" = "Participant 3", "P4_TO_LAPTOP" = "Participant 4", "P5_TO_LAPTOP" = "Participant 5", "P6_TO_LAPTOP" = "Participant 6", "P7_TO_LAPTOP" = "Participant 7", "P8_TO_LAPTOP" = "Participant 8")) + theme(axis.text.x = element_text(angle = 60, hjust = 1)) + xlab("Each Participant") + ylab("Maximum Consecutive Number of Seconds \n Looking Away from Laptop") + ggtitle("Maximum Consecutive Amount of Time Each Participant \n Looks Away from the Laptop Screen") + geom_text(aes(label = round(Max.Bad, 4)), vjust = -0.2, color = "black")
+max_away
+```
+
+```{r fig.height=5, fig.width=5}
+figure <- ggarrange(max_on, max_away + font("x.text", size = 10), ncol = 1, nrow = 2)
+figure
+```
+
