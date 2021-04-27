@@ -1,2 +1,2 @@
 data-analytics/*.html -linguist-detectable
-data-analytics/*.rmd liguist-language=R
+data-analytics/*.Rmd liguist-language=R
