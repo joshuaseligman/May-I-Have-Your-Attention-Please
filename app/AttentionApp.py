@@ -228,9 +228,9 @@ class Statistics(FloatLayout):
             avg = sum(self.user.span_times) / len(self.user.span_times)
             self.avg_label.text = f'Average Span: {round(avg, 1)} seconds'
             if avg > 1:
-                self.avg_notes.text = 'Way to go! Your attention span is higher\nthan average!'
+                self.avg_notes.text = 'Way to go! Your attention span is\nhigher than average!'
             elif avg > 0.5:
-                self.avg_notes.text = 'Nice work! Your average attention span\nis similar to that of the participants.'
+                self.avg_notes.text = 'Nice work! Your average attention\nspan is similar to that in the study.'
             else:
                 self.avg_notes.text = 'Try to pay attention! Your focus needs improvement.'
 
@@ -239,7 +239,7 @@ class Statistics(FloatLayout):
             if long > 8:
                 self.long_notes.text = 'Impressive! Your engagement and\npresence are recognized.'
             elif long > 5:
-                self.long_notes.text = 'Your longest attention span is average.\nKeep up the good work!'
+                self.long_notes.text = 'Your longest attention span is\naverage. Keep up the good work!'
             else:
                 self.long_notes.text = 'Try to rid yourself of any distractions.'
 
@@ -250,9 +250,9 @@ class Statistics(FloatLayout):
         else:
             avg_rate_of_change = (self.user.span_times[-1] - self.user.span_times[-5]) / self.user.span_times[-5]
             if avg_rate_of_change > 0:
-                self.image_notes.text = 'Your recent trends are positive. Keep up\nthe good work.'
+                self.image_notes.text = 'Your recent trends are positive. Keep\nup the good work.'
             else:
-                self.image_notes.text = 'Your attention has recently seen negative results. You need to focus more.'
+                self.image_notes.text = 'Your attention has recently seen\nnegative results. You need to focus\nmore.'
 
 #Class handles the home page
 class Home(FloatLayout):
